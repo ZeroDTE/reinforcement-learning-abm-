@@ -1,0 +1,2 @@
+Zeitkosten (Penalty),Grid Größe,Anzahl Ressourcen,Anzahl Hindernisse,Sichtradius,Max Schritte,Episoden pro Setting,DQN Learning Rate,Seed,DQN,Simple,Random,Sophist.,Momentum,Competitor,ROI
+-0.1,40x40,150,25,7,250,2000,0.0002,42,-3.361239999999999,-28.494679999999995,1.5210399999999993,-26.337739999999993,-28.8003,-67.86095999999999,-28.71017999999999
