@@ -8,7 +8,7 @@ from collections import deque
 
 app = Flask(__name__)
 
-# --- CONFIGURATION & CLASSES (COPIED FROM YOUR CODE) ---
+# CONFIGURATION 
 class Config:
     GRID_WIDTH = 40
     GRID_HEIGHT = 40
@@ -99,7 +99,7 @@ class GridWorld:
             ag.score += 10.0; self.grid[npx,npy] = 0; self.resources_remaining -= 1
         ag.pos = (npx,npy)
 
-# --- AGENTS ---
+# AGENTS 
 class BaseAgent:
     def __init__(self, id, name, color): 
         self.id=id; self.name=name; self.color=color; self.pos=(0,0); self.score=0; self.active=True
@@ -151,8 +151,7 @@ class BFSAgent(BaseAgent):
                     visited.add((nr,nc)); q.append(((nr,nc), path+[i]))
         return random.randint(0,4)
 
-# --- GLOBAL STATE ---
-# Note: In production servers, global state is risky, but for this demo on 1 worker it works.
+
 simulation = {
     "env": None,
     "running": False,
