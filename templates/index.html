@@ -2,45 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI GridWorld Simulation</title>
+    <title>AI GridWorld Showdown</title>
     <style>
         body { margin: 0; background-color: #1e1e1e; color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; display: flex; height: 100vh; overflow: hidden; }
         
-        /* LAYOUT */
         #game-container { flex: 3; display: flex; justify-content: center; align-items: center; background: #111; position: relative;}
-        #sidebar { flex: 1; background-color: #2d2d2d; padding: 20px; border-left: 2px solid #444; display: flex; flex-direction: column; min-width: 300px; max-width: 400px; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
+        #sidebar { flex: 1; background-color: #2d2d2d; padding: 20px; border-left: 2px solid #444; display: flex; flex-direction: column; min-width: 320px; box-shadow: -5px 0 15px rgba(0,0,0,0.5); overflow-y: auto; }
 
-        /* CANVAS */
-        canvas { background-color: #1e1e1e; border: 2px solid #555; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        canvas { background-color: #1e1e1e; border: 2px solid #555; box-shadow: 0 0 20px rgba(0,0,0,0.5); max-height: 90vh; max-width: 90vh; }
 
-        /* CONTROLS */
-        h1 { color: #ffd700; margin-top: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        h3 { border-bottom: 1px solid #555; padding-bottom: 5px; margin-top: 20px; color: #aaa; }
+        h1 { color: #ffd700; margin-top: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+        h3 { border-bottom: 1px solid #555; padding-bottom: 5px; margin-top: 15px; color: #aaa; font-size: 14px; text-transform: uppercase; }
         
-        .control-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 14px; color: #ccc; }
+        .control-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; font-size: 13px; color: #ccc; }
+        select, input[type="number"] { width: 100%; padding: 6px; background: #444; border: 1px solid #555; color: white; border-radius: 4px; box-sizing: border-box;}
         
-        select, input[type="number"] { width: 100%; padding: 8px; background: #444; border: 1px solid #555; color: white; border-radius: 4px; }
-        
-        /* BUTTONS */
-        .btn-row { display: flex; gap: 10px; margin-top: 20px; }
-        button { flex: 1; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.2s; text-transform: uppercase;}
-        
+        .btn-row { display: flex; gap: 10px; margin-top: 15px; }
+        button { flex: 1; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: all 0.2s; text-transform: uppercase; font-size: 12px;}
         .btn-apply { background: #4caf50; color: white; }
         .btn-apply:hover { background: #45a049; }
-        
         .btn-toggle { background: #2196f3; color: white; }
         .btn-toggle:hover { background: #1976d2; }
 
-        /* LEADERBOARD */
-        #leaderboard { margin-top: 20px; background: #222; border-radius: 4px; overflow: hidden; }
-        .agent-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #333; align-items: center; }
-        .agent-name { display: flex; align-items: center; gap: 10px; font-weight: bold; }
-        .color-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-        .agent-score { font-family: monospace; font-size: 16px; }
+        #leaderboard { margin-top: 10px; background: #222; border-radius: 4px; overflow: hidden; }
+        .agent-row { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #333; align-items: center; font-size: 13px; }
+        .agent-name { display: flex; align-items: center; gap: 8px; font-weight: bold; }
+        .color-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); }
+        .agent-score { font-family: monospace; font-size: 14px; color: #ffd700; }
 
-        /* STATS */
-        .stat-box { display: flex; justify-content: space-between; margin-top: 10px; font-size: 18px; color: #ffd700; }
+        .stat-box { display: flex; justify-content: space-between; margin-top: 8px; font-size: 14px; color: #eee; background: #333; padding: 8px; border-radius: 4px;}
+        .status-msg { text-align: center; margin-top: 10px; font-weight: bold; min-height: 20px; }
     </style>
 </head>
 <body>
@@ -50,63 +42,66 @@
     </div>
 
     <div id="sidebar">
-        <h1>AI Dashboard</h1>
+        <h1>🏁 AI GridWorld Showdown</h1>
         
         <h3>Simulation Config</h3>
-        
         <div class="control-group">
-            <label>AI Model Strategy</label>
+            <label>AI Brain (Red Agent)</label>
             <select id="modelSelect">
-                <option value="cost">Minimize Cost (Safe)</option>
+                <option value="cost">Minimize Cost (Safe/Efficient)</option>
                 <option value="profit">Maximize Profit (Greedy)</option>
             </select>
         </div>
 
         <div class="control-group">
-            <label>Extra Agents</label>
-            <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
                 <input type="checkbox" id="bfsCheck" style="width:auto;">
-                <span>Include BFS Robot (Magenta)</span>
+                <label style="margin:0; cursor:pointer;" for="bfsCheck">Add BFS Robot (White)</label>
             </div>
         </div>
 
         <div class="control-group">
             <div style="display:flex; gap:10px;">
                 <div style="flex:1">
-                    <label>Penalty</label>
-                    <input type="number" id="penaltyInput" value="-2.0" step="0.1">
+                    <label>Step Penalty</label>
+                    <input type="number" id="penaltyInput" value="-2.0" step="0.1" max="0">
                 </div>
                 <div style="flex:1">
-                    <label>Resources</label>
-                    <input type="number" id="resInput" value="150" step="10">
+                    <label>Max Steps</label>
+                    <input type="number" id="maxStepsInput" value="250" step="10" min="50">
                 </div>
             </div>
         </div>
+        <div class="control-group">
+            <label>Resource Count</label>
+            <input type="number" id="resInput" value="150" step="10" min="10" max="500">
+        </div>
 
         <div class="btn-row">
-            <button class="btn-apply" onclick="applySettings()">Apply & Reset</button>
+            <button class="btn-apply" onclick="applySettings()">🔄 Apply & Reset</button>
         </div>
-        
         <div class="btn-row">
-            <button class="btn-toggle" onclick="togglePause()" id="pauseBtn">START / PAUSE</button>
+            <button class="btn-toggle" onclick="togglePause()" id="pauseBtn">▶ START / PAUSE</button>
         </div>
 
         <h3>Live Ranking</h3>
-        <div id="leaderboard">
-            </div>
+        <div id="leaderboard"></div>
 
+        <h3>Stats</h3>
         <div class="stat-box">
-            <span>Resources Left:</span>
-            <span id="resCount">0</span>
+            <span>Resources Left:</span> <span id="resCount">0</span>
         </div>
+        <div class="stat-box">
+            <span>Steps:</span> <span id="stepCount">0 / 0</span>
+        </div>
+        <div id="gameStatus" class="status-msg" style="color: #ffd700;"></div>
     </div>
 
     <script>
         const canvas = document.getElementById('gridCanvas');
         const ctx = canvas.getContext('2d');
-        const cellSize = 20; // 40x40 grid * 20px = 800px
+        const cellSize = 20; 
 
-        // Main Loop
         async function updateLoop() {
             try {
                 const response = await fetch('/step');
@@ -117,73 +112,67 @@
                     updateUI(data);
                 }
             } catch (e) { console.error(e); }
-            
-            // Loop speed (approx 20 FPS)
-            setTimeout(updateLoop, 50); 
+            setTimeout(updateLoop, 40); 
         }
 
         function draw(data) {
-            // Clear
-            ctx.fillStyle = "#303030";
+            ctx.fillStyle = "#222";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw Grid Lines (Subtle)
-            ctx.strokeStyle = "#3a3a3a";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            for(let i=0; i<=800; i+=cellSize) {
-                ctx.moveTo(i,0); ctx.lineTo(i,800);
-                ctx.moveTo(0,i); ctx.lineTo(800,i);
-            }
-            ctx.stroke();
-
-            // Draw Obstacles (Grey Blocks)
-            ctx.fillStyle = "#666";
+            // Obstacles
+            ctx.fillStyle = "#555";
             data.grid.forEach(obj => {
                 if(obj.t === 1) ctx.fillRect(obj.y*cellSize, obj.x*cellSize, cellSize, cellSize);
             });
 
-            // Draw Resources (Gold Circles)
-            ctx.fillStyle = "#FFD700";
+            // Resources (Gold with shine)
             data.grid.forEach(obj => {
                 if(obj.t === 2) {
+                    const cx = obj.y*cellSize + cellSize/2;
+                    const cy = obj.x*cellSize + cellSize/2;
+                    const grad = ctx.createRadialGradient(cx, cy, 2, cx, cy, 8);
+                    grad.addColorStop(0, "#fff7cc");
+                    grad.addColorStop(1, "#FFD700");
+                    ctx.fillStyle = grad;
                     ctx.beginPath();
-                    ctx.arc(obj.y*cellSize + cellSize/2, obj.x*cellSize + cellSize/2, cellSize/3, 0, Math.PI*2);
+                    ctx.arc(cx, cy, cellSize/3, 0, Math.PI*2);
                     ctx.fill();
                 }
             });
 
-            // Draw Agents
+            // Agents
             data.agents.forEach(ag => {
                 if(!ag.active) return;
-                
                 ctx.fillStyle = ag.color;
-                const x = ag.y * cellSize; // Flip logic: grid[row][col] -> x=col, y=row
+                const x = ag.y * cellSize; 
                 const y = ag.x * cellSize;
-                
-                // Agent Body
                 ctx.fillRect(x+2, y+2, cellSize-4, cellSize-4);
-                
-                // Border
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(255,255,255,0.7)";
+                ctx.lineWidth = 1;
                 ctx.strokeRect(x+2, y+2, cellSize-4, cellSize-4);
             });
         }
 
         function updateUI(data) {
             document.getElementById('resCount').innerText = data.res_left;
+            document.getElementById('stepCount').innerText = `${data.steps} / ${data.max_steps}`;
             
+            const statusDiv = document.getElementById('gameStatus');
+            if(data.game_over) {
+                statusDiv.innerText = data.res_left === 0 ? "✨ CLEARED! ✨" : "⛔ TIME'S UP";
+                statusDiv.style.color = data.res_left === 0 ? "#4caf50" : "#ff5252";
+            } else {
+                statusDiv.innerText = "";
+            }
+
             const lb = document.getElementById('leaderboard');
             lb.innerHTML = '';
             
-            // Sort by score
             const sorted = data.agents.sort((a,b) => b.score - a.score);
-            
             sorted.forEach(ag => {
                 const div = document.createElement('div');
                 div.className = 'agent-row';
-                div.style.opacity = ag.active ? 1.0 : 0.5;
+                div.style.opacity = ag.active ? 1.0 : 0.4;
                 div.innerHTML = `
                     <div class="agent-name">
                         <span class="color-dot" style="background:${ag.color}"></span>
@@ -195,25 +184,28 @@
             });
         }
 
-        // Controls
         async function applySettings() {
             const model = document.getElementById('modelSelect').value;
             const bfs = document.getElementById('bfsCheck').checked;
             const pen = document.getElementById('penaltyInput').value;
             const res = document.getElementById('resInput').value;
+            const maxSteps = document.getElementById('maxStepsInput').value;
 
             await fetch('/reset', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ model: model, use_bfs: bfs, penalty: pen, res: res })
+                body: JSON.stringify({ 
+                    model: model, 
+                    use_bfs: bfs, 
+                    penalty: pen, 
+                    res: res,
+                    max_steps: maxSteps
+                })
             });
         }
 
-        async function togglePause() {
-            await fetch('/toggle', {method: 'POST'});
-        }
+        async function togglePause() { await fetch('/toggle', {method: 'POST'}); }
 
-        // Start
         updateLoop();
     </script>
 </body>
