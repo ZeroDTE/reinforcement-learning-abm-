@@ -8,14 +8,14 @@ from collections import deque
 
 app = Flask(__name__)
 
-# --- CONFIGURATION ---
+# CONFIGURATION 
 class Config:
     GRID_WIDTH = 40
     GRID_HEIGHT = 40
     AGENT_VIEW_RADIUS = 7
     AGENT_VIEW_SIZE = (2 * AGENT_VIEW_RADIUS + 1)
 
-# --- MODEL ARCHITECTURE ---
+# MODEL ARCHITECTURE 
 class DQN_Architecture(nn.Module):
     def __init__(self, input_channels, num_actions):
         super(DQN_Architecture, self).__init__()
@@ -37,7 +37,7 @@ class DQN_Architecture(nn.Module):
         x = x.view(batch_size, -1) 
         return self.fc_layers(x)
 
-# --- AGENT CLASSES ---
+# AGENT CLASSES
 class BaseAgent:
     def __init__(self, id, name, color): 
         self.id=id; self.name=name; self.color=color; self.pos=(0,0); self.score=0; self.active=True
@@ -251,7 +251,7 @@ class TrainedAgent(BaseAgent):
         if self.stuck>2: self.stuck=0; return random.randint(0,3)
         return q.max(1)[1].item()
 
-# --- ENVIRONMENT ---
+# ENVIRONMENT 
 class GridWorld:
     def __init__(self, config, agents, step_penalty, num_resources, num_obstacles):
         self.width = 40; self.height = 40
@@ -315,7 +315,7 @@ class GridWorld:
             ag.score += 10.0; self.grid[npx,npy] = 0; self.resources_remaining -= 1
         ag.pos = (npx,npy)
 
-# --- GLOBAL STATE ---
+# GLOBAL STATE 
 simulation = { "env": None, "running": False, "max_steps": 250 }
 
 def init_env(model_file, use_bfs, penalty, res_count, max_steps):
@@ -338,7 +338,7 @@ def init_env(model_file, use_bfs, penalty, res_count, max_steps):
     simulation["env"] = GridWorld(Config(), agents, penalty, res_count, 40)
     simulation["env"].reset()
 
-# --- ROUTES ---
+# ROUTES 
 @app.route('/')
 def index(): return render_template('index.html')
 
