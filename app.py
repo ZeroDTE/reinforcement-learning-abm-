@@ -62,10 +62,84 @@ class SophisticatedHeuristicAgent(BaseAgent):
     def __init__(self, id, name, color):
         super().__init__(id, name, color)
         self.memory = deque(maxlen=10)
-    def reset(self): super().reset(); self.memory.clear()
+
+    def reset(self): 
+        super().reset() 
+        self.memory.clear()
+
+    # Hilfsfunktion, um globalen Pfad zu speichern (wird von GridWorld nicht automatisch gemacht im Web-Code)
+    def update_memory(self, pos):
+        self.memory.append(pos)
+
     def act(self, view):
-        # Uses Heuristic logic but memory would go here (simplified for web speed)
-        return HeuristicAgent(0, "tmp", "").act(view)
+        # 1. Setup View
+        v = view.squeeze(0).numpy()
+        r = 7 # Radius
+        center = np.array([r, r])
+
+        # Global Memory Update (da wir im Web-Code keine separate record_step Funktion haben)
+        # Wir fügen die aktuelle Position hinzu, damit wir nicht sofort zurücklaufen
+        self.update_memory(self.pos)
+
+        # Objekte finden
+        # Channel 2 = Resource, Channel 3 = Agent
+        resources = np.argwhere(v[2] == 1)
+        opponents = np.argwhere(v[3] == 1)
+        # Uns selbst (Mitte) aus Gegnerliste entfernen
+        opponents = np.array([o for o in opponents if not np.array_equal(o, center)])
+
+        # PRIO 1: Sichere Ausbeutung 
+        if len(resources) > 0:
+            dists = np.linalg.norm(resources - center, axis=1)
+            sorted_indices = np.argsort(dists)
+            sorted_resources = resources[sorted_indices]
+
+            for res in sorted_resources:
+                my_dist = np.linalg.norm(res - center)
+                is_safe = True
+                
+                if len(opponents) > 0:
+                    opp_dists = np.linalg.norm(opponents - res, axis=1)
+                    if np.min(opp_dists) <= my_dist:
+                        is_safe = False
+                
+                if is_safe:
+                    return self._move_towards(center, res)
+
+        # PRIO 2: Aktive Flucht 
+        if len(opponents) > 0:
+            opp_dists = np.linalg.norm(opponents - center, axis=1)
+            closest_opp = opponents[np.argmin(opp_dists)]
+            if np.min(opp_dists) <= 2: # Fluchtradius
+                return self._move_away(center, closest_opp)
+
+        # PRIO 3: Memory Exploration
+        return self._memory_based_random_move()
+
+    def _move_towards(self, current, target):
+        dx, dy = target - current
+        if abs(dx) > abs(dy): return 0 if dx < 0 else 1
+        else: return 2 if dy < 0 else 3
+
+    def _move_away(self, current, target):
+        dx, dy = current - target # Vektor VON Gegner WEG
+        if abs(dx) > abs(dy): return 1 if dx < 0 else 0
+        else: return 3 if dy < 0 else 2
+
+    def _memory_based_random_move(self):
+        possible = [0, 1, 2, 3]
+        random.shuffle(possible)
+        for move in possible:
+            dx, dy = 0, 0
+            if move == 0: dx=-1
+            elif move == 1: dx=1
+            elif move == 2: dy=-1
+            elif move == 3: dy=1
+            # Simulierte neue Position
+            nx, ny = self.pos[0]+dx, self.pos[1]+dy
+            if (nx, ny) not in self.memory:
+                return move
+        return random.randint(0, 4)
 
 class MomentumAgent(BaseAgent):
     def __init__(self, id, name, color):
@@ -86,7 +160,39 @@ class MomentumAgent(BaseAgent):
         return self.last_move
 
 class CompetitorAgent(BaseAgent):
-    def act(self, view): return random.randint(0, 4)
+    def act(self, view):
+        v = view.squeeze(0).numpy()
+        r = 7
+        center = np.array([r, r])
+
+        resources = np.argwhere(v[2] == 1)
+        opponents = np.argwhere(v[3] == 1)
+        opponents = np.array([o for o in opponents if not np.array_equal(o, center)])
+
+        best_target = None
+        min_dist = float('inf')
+
+        for res in resources:
+            my_dist = np.linalg.norm(res - center)
+            race_won = True
+            
+            if len(opponents) > 0:
+                opp_dists = np.linalg.norm(opponents - res, axis=1)
+                # Wenn Gegner näher oder gleich nah ist -> Verloren
+                if np.min(opp_dists) <= my_dist:
+                    race_won = False
+            
+            if race_won:
+                if my_dist < min_dist:
+                    min_dist = my_dist
+                    best_target = res
+        
+        if best_target is not None:
+            dx, dy = best_target - center
+            if abs(dx) > abs(dy): return 0 if dx < 0 else 1
+            else: return 2 if dy < 0 else 3
+            
+        return random.randint(0, 4)
 
 class ROIAgent(BaseAgent):
     def __init__(self, id, name, color, step_cost):
