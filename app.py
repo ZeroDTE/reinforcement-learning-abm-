@@ -227,7 +227,7 @@ def init_env(model_file, use_bfs, penalty, res_count, max_steps):
     ]
     
     if use_bfs:
-        agents.append(BFSAgent(7, "BFS Robot", "#FFFFFF"))  # White
+        agents.append(BFSAgent(7, "BFS", "#FFFFFF"))  # White
 
     simulation["env"] = GridWorld(Config(), agents, penalty, res_count, 40)
     simulation["env"].reset()
