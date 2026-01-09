@@ -1,231 +1,112 @@
-# 📅 Woche-für-Woche Anleitung
+# Woche-für-Woche Anleitung
 
-Dieser Guide zeigt, welche Themen und Aufgaben in jeder Woche behandelt werden.
+## Woche 1: Foundation
 
----
+Ziel: Verstehe die GridWorld Umgebung und implementiere einfache Agenten.
 
-## 🎯 WOCHE 1: FOUNDATION - Die Spielwelt verstehen
+### Was ihr macht
+- Die GridWorld Klasse analysieren
+- - reset() und step() verstehen
+  - - Kleine Experimente mit dem Environment
+   
+    - ### Hausaufgabe
+    - Schreibt eine Funktion random_episode(), die eine Episode mit zufälligen Aktionen spielt und den Score zurückgibt. Führt 50 solche Episodes aus und berechnet Durchschnitt, Min, Max.
+   
+    - Expected result: Score sollte bei 0-5 liegen.
+   
+    - ---
 
-**Ziel:** Verstehe die GridWorld Umgebung und implementiere einfache Agenten
+    ## Woche 2: Q-Learning
 
-### Präsenztermin (90 Min)
-1. **Einführung (10 Min)**
-2.    - Was ist Reinforcement Learning? (Visualisierung zeigen!)
-      -    - Überblick über das Projekt
-           -    - Setup: Notebooks öffnen, Dependencies prüfen
-            
-                - 2. **Environment Exploration (30 Min)**
-                  3.    - GridWorld Klasse gemeinsam durchgehen
-                        -    - Code: Was macht `reset()`? Was macht `step()`?
-                             -    - Kleine Experimente: Agent manual bewegen, Rewards verstehen
-                              
-                                  - 3. **Hausaufgabe erklären (10 Min)**
-                                    4.    - Random Episodes implementieren
-                                          -    - 50 zufällige Episoden laufen lassen
-                                               -    - Statistiken berechnen
-                                                
-                                                    - 4. **Q&A + Debugging (40 Min)**
-                                                      5.    - Studierenden helfen, Hausaufgabe zu starten
-                                                            -    - Common mistakes:
-                                                                 -      - Off-by-one Fehler bei Array-Indizes
-                                                                 -       - GridWorld.reset() vergessen
-                                                                 -        - action ist außerhalb von [0, 5]
-                                                             
-                                                                 -    ### Hausaufgabe (bis nächste Woche)
-                                                                 -    ```python
-                                                                      def random_episode(env, max_steps=100):
-                                                                          # TODO: Implementiere
-                                                                          # 1. env.reset() aufrufen
-                                                                          # 2. Schleife mit zufälligen Aktionen
-                                                                          # 3. Score zurückgeben
-                                                                          pass
+    Ziel: Trainiert einen Q-Learning Agent der lernt.
 
-                                                                      # Führe 50 Episodes aus und berechne:
-                                                                      # - Durchschnittsscore
-                                                                      # - Min/Max
-                                                                      # - Std-Abweichung
-                                                                      ```
+    ### Was ihr macht
+    - Q-Learning Theorie: Q(s,a) = Q(s,a) + alpha * (reward + gamma * max Q(s') - Q(s,a))
+    - - State Diskretisierung implementieren
+      - - Q-Tabelle aufbauen
+        - - Agent trainieren
+         
+          - ### Hausaufgabe
+          - Testet verschiedene Hyperparameter (learning_rate, discount_factor). Was funktioniert besser?
+         
+          - Expected result: Agent mit Score > 5.
+         
+          - ---
 
-                                                                      **Erwartetes Ergebnis:** Score sollte bei ~0-5 liegen (zufällig is nicht gut!)
+          ## Woche 3: Deep Q-Learning (DQN)
 
-                                                                      ---
+          Ziel: Mit neuronalen Netzen trainieren.
 
-                                                                      ## 🎯 WOCHE 2: Q-LEARNING - Der Agent lernt
+          ### Was ihr macht
+          - CNN Architektur aufbauen
+          - - DQN Agent implementieren
+            - - Replay Memory verstehen
+              - - Erstes Training starten
+               
+                - ### Hausaufgabe
+                - Trainiert einen DQN mit verschiedenen Learning Rates. Vergleicht die Lernkurven.
+               
+                - Expected result: Modell speichern als .pth Datei.
+               
+                - ---
 
-                                                                      **Ziel:** Trainiere einen Q-Learning Agent mit Tabellen-basiertem Lernen
+                ## Woche 4: Test und Abschluss
 
-                                                                      ### Präsenztermin (90 Min)
-                                                                      1. **Q-Learning Theorie (20 Min)**
-                                                                      2.    - Bellman Equation erklären (Whiteboard!)
-                                                                            -    - Q(s,a) = erwartete Belohnung
-                                                                                 -    - Die Update-Regel: `Q ← Q + α * (r + γ * max_Q' - Q)`
-                                                                                  
-                                                                                      - 2. **SimpleQLearningAgent durchgehen (30 Min)**
-                                                                                        3.    - State Diskretisierung: Warum nur 5 States?
-                                                                                              -    - Q-Tabelle: Tabelle zeigen und Struktur erklären
-                                                                                                   -    - ε-greedy Strategie: Exploration vs Exploitation
-                                                                                                    
-                                                                                                        - 3. **Training live machen (20 Min)**
-                                                                                                          4.    - Code zusammen ausführen
-                                                                                                                -    - Lernkurve anschauen
-                                                                                                                     -    - "Warum steigt der Score?"
-                                                                                                                      
-                                                                                                                          - 4. **Debugging & Tuning (20 Min)**
-                                                                                                                            5.    - Hyperparameter: Learning Rate, Gamma, Epsilon decay
-                                                                                                                                  -    - Was passiert wenn lr=1.0? (Agent "vergisst" alles)
-                                                                                                                                       -    - Was wenn gamma=0? (Agent ignoriert Zukunft)
-                                                                                                                                        
-                                                                                                                                            - ### Hausaufgabe
-                                                                                                                                            - ```python
-                                                                                                                                              # TODO: Parameter tunen!
-                                                                                                                                              # Teste verschiedene Kombinationen:
-                                                                                                                                              q_agent = SimpleQLearningAgent(
-                                                                                                                                                  learning_rate=0.05,  # Versuche: 0.01, 0.05, 0.1, 0.5
-                                                                                                                                                  discount_factor=0.9,  # Versuche: 0.5, 0.9, 0.99
-                                                                                                                                                  epsilon=1.0
-                                                                                                                                              )
-                                                                                                                                              ```
-                                                                                                                                              
-                                                                                                                                              **Erwartetes Ergebnis:** Q-Learning Agent mit Score > 5.0
-                                                                                                                                              
-                                                                                                                                              **Fragen für Diskussion:**
-                                                                                                                                              - "Was ist besser: hohe oder niedrige Learning Rate?"
-                                                                                                                                              - - "Wann ist Exploration wichtig, wann Exploitation?"
-                                                                                                                                               
-                                                                                                                                                - ---
-                                                                                                                                                
-                                                                                                                                                ## 🎯 WOCHE 3: DEEP Q-LEARNING - Mit Neuronalen Netzen
-                                                                                                                                                
-                                                                                                                                                **Ziel:** Trainiere einen DQN Agent mit echtem Deep Learning
-                                                                                                                                                
-                                                                                                                                                ### Präsenztermin (90 Min)
-                                                                                                                                                1. **Neuronale Netzwerke Crashcourse (20 Min)**
-                                                                                                                                                2.    - Was ist ein CNN? (Layer visualisieren)
-                                                                                                                                                      -    - Warum besser als Q-Tabelle?
-                                                                                                                                                           -    - Forward Pass + Backpropagation (vereinfacht)
-                                                                                                                                                            
-                                                                                                                                                                - 2. **DQN Architektur erklären (20 Min)**
-                                                                                                                                                                  3.    - Policy Network vs Target Network
-                                                                                                                                                                        -    - Replay Memory: Warum ist das wichtig?
-                                                                                                                                                                             -    - Loss Function: Smooth L1
-                                                                                                                                                                              
-                                                                                                                                                                                  - 3. **DQNAgent Code durchgehen (25 Min)**
-                                                                                                                                                                                    4.    - Network Inits
-                                                                                                                                                                                          -    - select_action() mit torch
-                                                                                                                                                                                               -    - update() und training_step()
-                                                                                                                                                                                                
-                                                                                                                                                                                                    - 4. **Erstes Training (25 Min)**
-                                                                                                                                                                                                      5.    - Training starten (kann 10-20 Min dauern!)
-                                                                                                                                                                                                            -    - Während Training läuft: Fragen beantworten
-                                                                                                                                                                                                                 -    - Live Lernkurve anschauen
-                                                                                                                                                                                                                  
-                                                                                                                                                                                                                      - ### Hausaufgabe
-                                                                                                                                                                                                                      - ```python
-                                                                                                                                                                                                                        # TODO: DQN mit verschiedenen Settings trainieren
-                                                                                                                                                                                                                        # Teste:
-                                                                                                                                                                                                                        # 1. Different Learning Rates (0.0001, 0.0005, 0.001)
-                                                                                                                                                                                                                        # 2. Different Hidden Sizes (64, 128, 256)
-                                                                                                                                                                                                                        # 3. Track die Lernkurven für Vergleich
-                                                                                                                                                                                                                        ```
-                                                                                                                                                                                                                        
-                                                                                                                                                                                                                        **Erwartetes Ergebnis:** DQN-Modell speichern (.pth Datei)
-                                                                                                                                                                                                                        
-                                                                                                                                                                                                                        **Tipps zum Debuggen:**
-                                                                                                                                                                                                                        - Ist der Loss sinkend? Gut sign!
-                                                                                                                                                                                                                        - - Steigt Q-value über Zeit? Agent lernt!
-                                                                                                                                                                                                                          - - Score sinkt zuerst? Normal! (Agent erkundet)
-                                                                                                                                                                                                                           
-                                                                                                                                                                                                                            - ---
-                                                                                                                                                                                                                            
-                                                                                                                                                                                                                            ## 🎯 WOCHE 4: TEST & VISUALISIERUNG - Das Finale!
-                                                                                                                                                                                                                            
-                                                                                                                                                                                                                            **Ziel:** Teste deinen trainierten Agent und präsentiere Ergebnisse
-                                                                                                                                                                                                                            
-                                                                                                                                                                                                                            ### Präsenztermin (90 Min)
-                                                                                                                                                                                                                            1. **Trainierten Agent Testen (20 Min)**
-                                                                                                                                                                                                                            2.    - Load Model: `torch.load()`
-                                                                                                                                                                                                                                  -    - 20 Test Episodes
-                                                                                                                                                                                                                                       -    - Score anschauen
-                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                            - 2. **Visualisierung (30 Min)**
-                                                                                                                                                                                                                                              3.    - Lernkurven plotten: Random vs Q-Learning vs DQN
-                                                                                                                                                                                                                                                    -    - Lernkurve glätten (Moving Average)
-                                                                                                                                                                                                                                                         -    - Statistiken: Durchschnitt, Std, Min/Max
-                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                              - 3. **Vergleich & Analyse (20 Min)**
-                                                                                                                                                                                                                                                                4.    - Tabelle erstellen: Agent vs Score vs Training Zeit
-                                                                                                                                                                                                                                                                      -    - Diskussion: Warum DQN besser?
-                                                                                                                                                                                                                                                                           -    - Failure Cases analysieren
-                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                - 4. **Präsentationsvorbereitung (20 Min)**
-                                                                                                                                                                                                                                                                                  5.    - Studierenden helfen ihre Ergebnisse zu präsentieren
-                                                                                                                                                                                                                                                                                        -    - Was haben sie gelernt?
-                                                                                                                                                                                                                                                                                             -    - Welche Probleme gab es?
-                                                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                                                  - ### Finale Aufgabe
-                                                                                                                                                                                                                                                                                                  - ```python
-                                                                                                                                                                                                                                                                                                    # TODO: Erstelle eine Vergleichstabelle:
-                                                                                                                                                                                                                                                                                                    # Agent | Avg Score | Max Score | Training Zeit | Konvergenz?
-                                                                                                                                                                                                                                                                                                    # Random | ? | ? | 0 min | -
-                                                                                                                                                                                                                                                                                                    # Q-Learning | ? | ? | ~5 min | +
-                                                                                                                                                                                                                                                                                                    # DQN | ? | ? | ~20 min | ++
-                                                                                                                                                                                                                                                                                                    ```
-                                                                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                                                    **Abschlusspräsentation (20 Min pro Gruppe):**
-                                                                                                                                                                                                                                                                                                    1. Live Demo: Agent trainiert (schnell)
-                                                                                                                                                                                                                                                                                                    2. 2. Ergebnisse zeigen
-                                                                                                                                                                                                                                                                                                       3. 3. Was gelernt? (Q-Learning, DQN, RL grundlagen)
-                                                                                                                                                                                                                                                                                                          4. 4. Probleme & Lösungen
-                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                             5. ---
-                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                             6. ## 💡 Tipps für Tutoren
-                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                             7. ### Vor jeder Woche
-                                                                                                                                                                                                                                                                                                             8. - [ ] Code testen (keine Syntax Errors!)
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Dependencies installieren
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Demo vorbereiten (~10 Min Video)
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Haus aufgaben korrigieren
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ### Während der Woche
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Langsam erklären - RL ist komplex!
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Code live editieren/debuggen
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Fragen ermutigen
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Blackboard/Whiteboard für Formeln nutzen
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ### Nach der Woche
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Hausaufgaben feedback geben
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Probleme notieren (für nächstes Semester?)
-                                                                                                                                                                                                                                                                                                                - [ ] - [ ] Scores/Statistiken sammeln (für Evaluation)
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ### Common Issues & Solutions
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] | Problem | Ursache | Lösung |
-                                                                                                                                                                                                                                                                                                                - [ ] |---------|--------|--------|
-                                                                                                                                                                                                                                                                                                                - [ ] | `ImportError: No module named torch` | Dependencies nicht installiert | `pip install -r requirements.txt` |
-                                                                                                                                                                                                                                                                                                                - [ ] | Agent lernt nicht (Score bleibt bei -0.1) | Zu viele Wände, Agent wird bestraft | Grid mit weniger Hindernissen testen |
-                                                                                                                                                                                                                                                                                                                - [ ] | DQN Training zu langsam | CPU nur | "Das ist normal - GPU würde helfen" |
-                                                                                                                                                                                                                                                                                                                - [ ] | Lernkurve sehr zittrig | Batch Size zu klein | BATCH_SIZE erhöhen (64 → 128) |
-                                                                                                                                                                                                                                                                                                                - [ ] | Agent folgt nur Wänden | State Diskretisierung zu simpel | Erkläre warum in Woche 3 CNN besser ist |
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ---
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ## 🎓 Learning Outcomes
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] Nach 4 Wochen sollten die Studierenden können:
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ Reinforcement Learning Konzepte verstehen (State, Action, Reward)
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ Q-Learning von Hand durchrechnen
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ PyTorch Code schreiben und verstehen
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ Neuronale Netzwerke trainieren
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ ML Experimente auswerten und visualisieren
-                                                                                                                                                                                                                                                                                                                - [ ] - ✅ ML Models debuggen
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ---
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] ## 📚 Zusätzliche Ressourcen für Tutoren
-                                                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                                                - [ ] - [RL by David Silver (UCL)](https://www.davidsilver.uk/teaching/) - klassische Vorlesung
-                                                                                                                                                                                                                                                                                                                - [ ] - [DeepMind Courses](https://deepmind.com/learning-resources/) - neuere Kurse
-                                                                                                                                                                                                                                                                                                                - [ ] - [OpenAI Spinning Up](https://spinningup.openai.com/) - RL praktisch
-                                                                                                                                                                                                                                                                                                                - [ ] 
+                Ziel: Agenten testen und Ergebnisse vergleichen.
+
+                ### Was ihr macht
+                - Trainierten Agent laden
+                - - 20 Test Episodes spielen
+                  - - Lernkurven plotten
+                    - - Vergleich: Random vs Q-Learning vs DQN
+                     
+                      - ### Finale Aufgabe
+                      - Erstellt eine Tabelle mit allen Ergebnissen:
+                      - - Agent Name
+                        - - Average Score
+                          - - Max Score
+                            - - Training Zeit
+                             
+                              - ---
+
+                              ## Tipps für Tutoren
+
+                              Vor jedem Termin:
+                              - Code selbst testen
+                              - - Dependencies prüfen
+                                - - Demo vorbereiten
+                                 
+                                  - Während des Termins:
+                                  - - Langsam erklären, RL ist komplex
+                                    - - Code live debuggen zeigen
+                                      - - Fragen stellen lassen
+                                       
+                                        - Nach dem Termin:
+                                        - - Feedback zu Hausaufgaben geben
+                                          - - Probleme notieren
+                                           
+                                            - ### Common Issues
+                                           
+                                            - Problem: Agent lernt nicht (Score bleibt bei -0.1)
+                                            - Grund: Zu viele Wände oder schlechte Parameter
+                                            - Loesung: Weniger Hindernisse testen oder Learning Rate erhöhen
+                                           
+                                            - Problem: DQN Training dauert lange
+                                            - Grund: Nur CPU
+                                            - Loesung: Das ist normal, GPU wäre schneller
+                                           
+                                            - Problem: Lernkurve sehr zittrig
+                                            - Grund: Batch Size zu klein
+                                            - Loesung: BATCH_SIZE erhöhen
+                                           
+                                            - ---
+
+                                            ## Was die Studenten lernen
+
+                                            Nach 4 Wochen können sie:
+                                            - State, Action, Reward verstehen
+                                            - - Q-Learning von Hand durchrechnen
+                                              - - PyTorch Code schreiben
+                                                - - Neuronale Netze trainieren
+                                                  - - Lernkurven interpretieren
+                                                    - 
