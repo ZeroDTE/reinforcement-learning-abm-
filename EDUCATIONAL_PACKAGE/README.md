@@ -1,177 +1,98 @@
-# 🤖 Reinforcement Learning - Semesteraufgabe für Anfänger
+# Reinforcement Learning Semesteraufgabe
 
-**Erstellt für:** Python-Anfänger mit 4-5 Monaten Erfahrung  
-**Dauer:** 4 Wochen à 90 Minuten Präsenz  
-**Schwierigkeitsgrad:** ⭐⭐⭐ (mittelmäßig)
+Für Python-Anfänger mit 4-5 Monaten Erfahrung  
+4 Wochen mit je 90 Minuten Präsenz
 
 ---
 
-## 📋 Überblick
+## Was ist das?
 
-Diese Semesteraufgabe lehrt Reinforcement Learning durch ein **praktisches Projekt**: 
-Trainiere einen KI-Agent, der in einer virtuellen Welt 🌍 Ressourcen sammelt!
+Diese Aufgabe bringt dir Reinforcement Learning bei. Du trainierst einen KI-Agenten, der in einer virtuellen Welt Ressourcen sammelt.
 
-### Was ihr lernt
-- ✅ Wie KI-Agenten Entscheidungen treffen
-- - ✅ Reinforcement Learning & Q-Learning
-  - - ✅ Neuronale Netze (Deep Q-Networks) trainieren
-    - - ✅ Machine Learning Experimente auswerten
+Was du lernst:
+- Wie KI-Agenten lernen und Entscheidungen treffen
+- - Reinforcement Learning und Q-Learning
+  - - Neuronale Netze trainieren
+    - - Machine Learning Experimente auswerten
      
       - ---
 
-      ## 🎯 Projektstruktur
+      ## Aufbau
 
       ```
       EDUCATIONAL_PACKAGE/
-      ├── 1_Student_Notebook.ipynb          # Hauptaufgabe (mit Lücken zum ausfüllen)
-      ├── 2_Solution_Notebook.ipynb         # Tutoren-Lösungen
-      ├── 3_WEEK_BY_WEEK_GUIDE.md          # Detaillierter Wochenplan
-      ├── requirements.txt                  # Python-Dependencies
-      ├── helpers.py                        # Hilfsfunktionen für Visualisierung
-      └── README.md                        # Diese Datei
+      ├── 1_Student_Notebook.ipynb
+      ├── 2_Solution_Notebook.ipynb
+      ├── 3_WEEK_BY_WEEK_GUIDE.md
+      ├── requirements.txt
+      ├── helpers.py
+      └── README.md
       ```
 
       ---
 
-      ## 📅 4-Wochen Plan
+      ## 4 Wochen Überblick
 
-      ### **WOCHE 1: Foundation** (90 Min)
-      - Umgebung verstehen (GridWorld)
-      - - Agent-Klasse implementieren
-        - - Einfache Navigations-Agenten bauen
-          - - **Hausaufgabe:** Random Episodes analysieren
-           
-            - **Deadline:** Durchschnittliche Scores von 50 Random-Episodes berechnen
-           
-            - ### **WOCHE 2: Q-Learning** (90 Min)
-            - - Q-Learning Algorithmus verstehen
-              - - Q-Tabelle implementieren
-                - - Diskrete State-Representation
-                  - - Trainingslauf & Visualisierung
-                    - - **Hausaufgabe:** Q-Learning Parameter tunen
+      **Woche 1: Foundation**
+      - Die Spielwelt verstehen
+      - - Environment und Agent-Klasse implementieren
+        - - Ziel: Einfache Random-Agenten testen
+         
+          - **Woche 2: Q-Learning**
+          - - Der Agent lernt mit Tabellen
+            - - Belohnungen und State-Representation verstehen
+              - - Ziel: Q-Learning Agent mit Score > 5
+               
+                - **Woche 3: Deep Q-Learning**
+                - - Neuronale Netzwerke nutzen
+                  - - DQN trainieren
+                    - - Ziel: Deep Learning Agent mit Score > 15
                      
-                      - **Deadline:** Trainierten Q-Learning Agent mit Score > 5.0
-                     
-                      - ### **WOCHE 3: Deep Q-Learning (DQN)** (90 Min)
-                      - - Neuronale Netze & CNN verstehen
-                        - - DQN-Agent implementieren
-                          - - Replay Memory & Target Network
-                            - - Trainings-Loop
-                              - - **Hausaufgabe:** DQN trainieren mit verschiedenen Learning Rates
-                               
-                                - **Deadline:** DQN-Modell speichern (.pth Datei)
-                               
-                                - ### **WOCHE 4: Test & Visualisierung** (90 Min)
-                                - - Trainierten Agent in Aktion testen
-                                  - - Lernkurven visualisieren
-                                    - - Vergleich: Random vs Q-Learning vs DQN
-                                      - - Abschlusspräsentation vorbereiten
-                                       
-                                        - **Final Goal:** Final score > 20.0
-                                       
-                                        - ---
+                      - **Woche 4: Abschluss**
+                      - - Trainierte Agenten testen
+                        - - Lernkurven visualisieren
+                          - - Vergleiche analysieren
+                            - - Abschlusspräsentation
+                             
+                              - ---
 
-                                        ## 🚀 Quick Start
+                              ## Quick Start
 
-                                        ### Installation
-                                        ```bash
-                                        # 1. Repository klonen
-                                        git clone https://github.com/ZeroDTE/reinforcement-learning-abm-.git
-                                        cd reinforcement-learning-abm-/EDUCATIONAL_PACKAGE
+                              Installation:
+                              ```bash
+                              git clone https://github.com/ZeroDTE/reinforcement-learning-abm-.git
+                              cd reinforcement-learning-abm-/EDUCATIONAL_PACKAGE
+                              pip install -r requirements.txt
+                              jupyter notebook
+                              ```
 
-                                        # 2. Dependencies installieren
-                                        pip install -r requirements.txt
+                              Öffne dann `1_Student_Notebook.ipynb` und starte mit Phase 1.
 
-                                        # 3. Jupyter starten
-                                        jupyter notebook
+                              ---
 
-                                        # 4. Öffne: 1_Student_Notebook.ipynb
-                                        ```
+                              ## Was ihr brauchts
 
-                                        ### Erste Schritte
-                                        1. Öffne `1_Student_Notebook.ipynb` in Jupyter
-                                        2. 2. Lese die Einführung in **Phase 1**
-                                           3. 3. Starte mit dem Code und fülle die `TODO`-Blöcke aus
-                                              4. 4. Am Ende jeder Phase gibt es Hausaufgaben
-                                                
-                                                 5. ---
-                                                
-                                                 6. ## 📚 Tutoren-Guide
-                                                
-                                                 7. Für Tutoren gibt es `2_Solution_Notebook.ipynb` mit:
-                                                 8. - Alle Lösungen zu den TODOs
-                                                    - - Erklärungen hinter jedem Schritt
-                                                      - - Zusätzliche Insights und Best Practices
-                                                        - - Diskussionsfragen für die Präsenztermine
-                                                         
-                                                          - ### Tipps für Präsenztermine
-                                                          - - **Woche 1:** Visualisiert das GridWorld-Environment zusammen
-                                                            - - **Woche 2:** Debuggt Q-Learning gemeinsam (warum lernt der Agent?)
-                                                              - - **Woche 3:** Erklärt CNN-Layer und warum sie besser sind
-                                                                - - **Woche 4:** Analysiert Lernkurven und diskutiert Verbesserungen
-                                                                 
-                                                                  - ---
+                              - Python 3.8+
+                              - - NumPy, PyTorch, Matplotlib
+                                - - 10-15 Stunden über 4 Wochen
+                                  - - GPU ist optional (CPU funktioniert auch)
+                                   
+                                    - ---
 
-                                                                  ## 🛠️ Anforderungen
+                                    ## Für Tutoren
 
-                                                                  - **Python:** 3.8+
-                                                                  - - **Hauptbibliotheken:** NumPy, PyTorch, Matplotlib
-                                                                    - - **Zeit:** ~10-15 Stunden total (3-4 Std/Woche Hausaufgaben)
-                                                                      - - **GPU:** Optional (CPU funktioniert auch, dauert länger)
-                                                                       
-                                                                        - ---
+                                    Schaut `2_Solution_Notebook.ipynb` für alle Lösungen und Erklärungen.
 
-                                                                        ## 📊 Erwartete Ergebnisse
+                                    `WEEK_BY_WEEK_GUIDE.md` hat Details für jeden Termin.
 
-                                                                        Nach 4 Wochen sollten die Studierenden folgende Scores erreichen:
+                                    ---
 
-                                                                        | Agent | Woche 1 | Woche 2 | Woche 3 | Woche 4 |
-                                                                        |-------|---------|---------|---------|---------|
-                                                                        | Random | 2-3 | - | - | - |
-                                                                        | Q-Learning | - | 5-8 | - | - |
-                                                                        | DQN | - | - | 15-25 | 20-30 |
+                                    ## Fragen?
 
-                                                                        ---
-
-                                                                        ## 🤔 FAQ
-
-                                                                        **F: Muss ich GPU haben?**
-                                                                        A: Nein, CPU funktioniert auch. GPU ist ~5x schneller aber nicht notwendig.
-
-                                                                        **F: Wie lange dauert das Training?**
-                                                                        A: Q-Learning: ~5 Min | DQN: ~20 Min (CPU) | DQN: ~5 Min (GPU)
-
-                                                                        **F: Was ist ein "State"?**
-                                                                        A: Was der Agent aktuell sieht. Woche 1 erklärt das Grundkonzept.
-
-                                                                        **F: Kann ich mein eigenes Environment bauen?**
-                                                                        A: Ja! Nach Woche 3 seid ihr ready für Experimente.
-
-                                                                        ---
-
-                                                                        ## 📖 Zusätzliche Ressourcen
-
-                                                                        - [Sutton & Barto: Reinforcement Learning (Buch)](http://incompleteideas.net/book/the-book-2nd.html)
-                                                                        - - [Deep Reinforcement Learning (DeepMind Blog)](https://deepmind.com/blog/article/deep-reinforcement-learning)
-                                                                          - - [PyTorch Tutorial](https://pytorch.org/tutorials/)
-                                                                           
-                                                                            - ---
-
-                                                                            ## 🤝 Fragen/Probleme?
-
-                                                                            Falls es Fragen gibt:
-                                                                            1. Schau ins `WEEK_BY_WEEK_GUIDE.md`
-                                                                            2. 2. Schau in `2_Solution_Notebook.ipynb`
-                                                                               3. 3. Frag auf Discord/Slack der Vorlesung
-                                                                                  4. 4. GitHub Issues öffnen
-                                                                                    
-                                                                                     5. ---
-                                                                                    
-                                                                                     6. ## 📄 Lizenz
-                                                                                    
-                                                                                     7. Diese Semesteraufgabe basiert auf dem Original-Projekt von [ZeroDTE](https://github.com/ZeroDTE).
-                                                                                     8. Vereinfacht und angepasst für Unterricht.
-                                                                                    
-                                                                                     9. ---
-                                                                                    
-                                                                                     10. **Viel Spaß beim Lernen! 🚀**
+                                    1. Schaut ins `WEEK_BY_WEEK_GUIDE.md`
+                                    2. 2. Schaut in `2_Solution_Notebook.ipynb`
+                                       3. 3. GitHub Issues öffnen
+                                         
+                                          4. ---
+                                         
+                                          5. Viel Erfolg!
